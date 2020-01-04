@@ -29,13 +29,14 @@ def get_python_news():
             except(ValueError):
                 published = datetime.now()
 
-            save_news(title, url, published)
+            save_news(title, url, published)  # Сохраняем данные в БД.
 
 
 def save_news(title, url, published):
-    news_exists = News.query.filter(News.url == url).count()
+    news_exists = News.query.filter(News.url == url).count()  # Считает сколько одинаковых URL в базе
     print(news_exists)
-    if not news_exists:
+    if not news_exists:  # URL согласно модели News должен быть уникальным. Если таких URL в базе нет, то записываем
+        # данные
         news_news = News(title=title, url=url, published=published)
         db.session.add(news_news)
         db.session.commit()
