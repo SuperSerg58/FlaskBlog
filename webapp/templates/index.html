@@ -16,7 +16,7 @@
 {% block content %}
     {% for news in news_list %}
         <h3><a href="{{ news.url }}">{{ news.title }}</a></h3>
-        <p>{{ news.published }}</p>
+        <p>{{ news.published.strftime('%d.%m.%Y') }}</p>
         <hr>
     {% endfor %}
 {% endblock %}
