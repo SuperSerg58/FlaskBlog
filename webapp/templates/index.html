@@ -1,16 +1,27 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    {{ title }}
+{{ title }}
 {% endblock %}
 
+{% block login_message %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert alert-warning" role="alert">
+                {% for message in messages %}
+                {{ message }}<br>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+{% endblock%}
 
 {% block page_title %}
     Main Page:
 {% endblock %}
 
 {% block content_title %}
-    News:
+News:
 {% endblock %}
 
 {% block content %}
