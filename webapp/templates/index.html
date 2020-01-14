@@ -5,7 +5,19 @@
 {% endblock %}
 
 {% block page_title %}
-    Main Page:
+Main Page:
+{% endblock %}
+
+{% block alerts %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert alert-warning" role="alert">
+            {% for message in messages %}
+                {{ message }}<br>
+            {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
 {% endblock %}
 
 {% block content_title %}
