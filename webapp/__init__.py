@@ -1,11 +1,14 @@
-from flask import Flask, render_template, redirect, url_for
-from flask_login import LoginManager, current_user, login_required
-
+from flask import Flask, render_template
+from flask_login import LoginManager
 from webapp.weather import weather_by_city
-from webapp.model import db, News
 
+from webapp.db import db
 from webapp.user.models import User
+from webapp.news.models import News
+
 from webapp.user.views import blueprint as user_blueprint
+from webapp.admin.views import blueprint as admin_blueprint
+from webapp.news.views import blueprint as news_blueprint
 
 
 def create_app():
@@ -18,24 +21,11 @@ def create_app():
     login_manager.login_view = 'user.login'  # Передаем в логин вью название функции, которая этим будет заниматься
 
     app.register_blueprint(user_blueprint)  # Регистрируем блюпринт Юзеров
+    app.register_blueprint(admin_blueprint)  # Регистрируем блюпринт Админа
+    app.register_blueprint(news_blueprint)  # Регистрируем блюпринт Новостей
 
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(user_id)
-
-    @app.route('/')
-    def index():
-        title = 'Main Page'
-        weather = weather_by_city(app.config['WEATHER_DEFAULT_CITY'])
-        news_list = News.query.order_by(News.published.desc()).all()  # Достает список новостей из БД
-        return render_template('index.html', title=title, weather=weather, news_list=news_list)
-
-    @app.route('/admin')
-    @login_required
-    def admin_index():
-        if current_user.is_admin:
-            return 'Hello Admin'
-        else:
-            return 'You are not Admin'
 
     return app

@@ -2,7 +2,7 @@ from getpass import getpass  # для ввода пароля из команд�
 import sys
 
 from webapp import create_app
-from webapp.model import db
+from webapp.db import db
 from webapp.user.models import User
 
 
