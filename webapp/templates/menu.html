@@ -17,7 +17,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">Utils</a>
+                <a class="nav-link" href="{{ url_for('logs.logs') }}">Logs</a>
             </li>
 
         </ul>
@@ -27,10 +27,27 @@
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
 
-        <ul class="navbar-nav mr-left">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('user.login') }}">Login<span class="sr-only">(current)</span></a>
-            </li>
+        <ul class="navbar-nav">
+            {% if current_user.is_authenticated %}
+                <li class="nav-item">
+                    <span class="nav-link">Привет, {{ current_user.username}}</span>
+                </li>
+                {% if current_user.is_admin %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('admin.admin_index') }}">Admin Panel</a>
+                    </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('user.logout') }}">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('user.register') }}">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('user.login') }}">Login</a>
+                </li>
+             {% endif %}
         </ul>
 
     </div>

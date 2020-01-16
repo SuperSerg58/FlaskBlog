@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, render_template
 from webapp.user.decorators import admin_required
 
 blueprint = Blueprint('admin', __name__, url_prefix='/admin')  # имя_сайта/users/login
@@ -7,4 +7,5 @@ blueprint = Blueprint('admin', __name__, url_prefix='/admin')  # имя_сайт
 @blueprint.route('')
 @admin_required
 def admin_index():
-    return 'Hello Admin'
+    title = 'Admin Panel'
+    return render_template('admin/admin.html', title=title)
