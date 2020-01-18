@@ -18,9 +18,12 @@
 <!-------------------------------------------- NAVBAR --------------------------------------------->
 {% include 'menu.html' %}
 <!-------------------------------------------- NAVBAR --------------------------------------------->
+{% block alerts %}
+
+{% endblock %}
 
 <div class="container mt-5">
-    {% block alerts %} {% endblock %}
+
 
     <h1> {% block page_title %} {% endblock %} </h1>
 
