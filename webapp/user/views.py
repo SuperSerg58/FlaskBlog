@@ -5,6 +5,7 @@ from webapp.weather import weather_by_city
 from webapp.db import db
 from webapp.user.forms import LoginForm, RegistrationForm
 from webapp.user.models import User
+from webapp.utils import get_redirect_target
 
 blueprint = Blueprint('user', __name__, url_prefix='/users')  # имя_сайта/users/login
 
@@ -12,7 +13,7 @@ blueprint = Blueprint('user', __name__, url_prefix='/users')  # имя_сайт�
 @blueprint.route('/login')
 def login():
     if current_user.is_authenticated:  # Если пользователь авторизован, то его редиректнет на index
-        return redirect(url_for('news.index'))
+        return redirect(get_redirect_target())
     title = 'Авторизация'
     login_form = LoginForm()
     weather = weather_by_city(current_app.config['WEATHER_DEFAULT_CITY'])
@@ -29,7 +30,7 @@ def process_login():
         if user and user.check_password(form.password.data):  # Если пользователь существует в базе
             login_user(user, remember=form.remember_me.data)  # запоминает пользователя если стоит галочка
             flash('{} Вы успешно вошли на сайт'.format(current_user.username))
-            return redirect(url_for('news.index'))
+            return redirect(get_redirect_target())
 
     flash('Неправильные имя или пароль')
     return redirect(url_for('user.login'))

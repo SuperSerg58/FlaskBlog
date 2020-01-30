@@ -9,15 +9,7 @@ Main Page:
 {% endblock %}
 
 {% block alerts %}
-{% with messages = get_flashed_messages() %}
-    {% if messages %}
-        <div class="alert alert-warning" role="alert">
-        {% for message in messages %}
-            {{ message }}<br>
-        {% endfor %}
-        </div>
-    {% endif %}
-{% endwith %}
+    {% include('messages.html') %}
 {% endblock %}
 
 {% block content_title %}
@@ -27,7 +19,7 @@ News:
 {% block content %}
     {% for news in news_list %}
         <h3><a href="{{ url_for('news.single_news', news_id=news.id) }}">{{ news.title }}</a></h3>
-        <p>{{ news.published.strftime('%d.%m.%Y') }}</p>
+        <p>{{ news.published.strftime('%d.%m.%Y') }} | Комментарии: {{ news.comments_count() }}</p>
         <hr>
     {% endfor %}
 {% endblock %}
